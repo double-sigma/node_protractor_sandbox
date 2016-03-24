@@ -17,7 +17,7 @@ var url = require("url");
 // http.createServer(server).listen(8888);
 
 
-function start(route) { // DI for routing
+function start(route, handle) { // DI. Expecting route function and object of url<->function mapping
 
     // or we can simply name this function and pass its name
     // can't move this into own first level scope, because otherwise we can't pass route
@@ -25,7 +25,7 @@ function start(route) { // DI for routing
         var pathname = url.parse(request.url).pathname;
         console.log("Request for " + pathname + " received");
 
-        route(pathname);
+        route(handle, pathname);
 
         response.writeHead(200, {"Content-Type": "text/plain"});
         response.write("Hello World");
