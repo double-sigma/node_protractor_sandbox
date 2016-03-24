@@ -14,17 +14,18 @@ var url = require("url");
 //     response.write("Hello World");
 //     response.end();
 // }; // NB! must terminate assignment operation, yay @ IDEA
-// http.createServer(onRequest).listen(8888);
-
+// http.createServer(server).listen(8888);
 
 // or we can simply name this function and pass its name
-function onRequest(request, response) { // request and response are returned on each callback of createServer
-    console.log("Request for received");
+function onRequest(request, response) { // request and response are returned on each received request
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write("Hello World");
     response.end();
 }
+function start() {
+    http.createServer(onRequest).listen(8888); // on request function receives request, response from createServer
+    console.log("Server has started");
+}
 
-http.createServer(onRequest).listen(8888); // on request function receives request, response from createServer
-
-console.log("Server has started");
+// Making some code a module means we need to export those parts of its functionality that we want to provide to scripts.
+exports.start = start;
