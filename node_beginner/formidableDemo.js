@@ -1,4 +1,4 @@
-var formidable = require('formidable'), http = require('http'), sys = require('sys');
+var formidable = require('formidable'), http = require('http'), util = require('util');
 
 http.createServer(function(req, res) {
     if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
@@ -7,7 +7,7 @@ http.createServer(function(req, res) {
         form.parse(req, function(error, fields, files) {
             res.writeHead(200, {'content-type': 'text/plain'});
             res.write('received upload:\n\n');
-            res.end(sys.inspect({fields: fields, files: files}));
+            res.end(util.inspect({fields: fields, files: files}));
         });
         return;
     }
@@ -22,3 +22,8 @@ http.createServer(function(req, res) {
         '</form>'
     );
 }).listen(8888);
+
+
+// In order to make our use case happen, what we need to do is to include the form-parsing logic of formidable
+// into our code structure, plus we will need to find out how to serve the content of the uploaded file,
+// which is saved into the /tmp folder, to a requesting browser
