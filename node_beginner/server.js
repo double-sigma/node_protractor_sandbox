@@ -22,31 +22,10 @@ function start(route, handle) { // DI. Expecting route function and object of ur
     // or we can simply name this function and pass its name
     // can't move this into own first level scope, because otherwise we can't pass route
     function onRequest(request, response) { // request and response are returned on each received request
-        var postData = "";
         var pathname = url.parse(request.url).pathname;
         console.log("Request for " + pathname + " received");
-
-        // In my opinion, it’s an HTTP servers job to give the application all the data from a requests it needs
-        // to do its job. Therefore, I suggest we handle the POST data processing right in the server
-        // and pass the final data on to the router and the request handlers
-        request.setEncoding("utf8");
-
-        // called when a new chunk of data was received
-        request.addListener("data", function(postDataChunk) {
-            postData += postDataChunk;
-            console.log("Received POST data chunk '"+ postDataChunk + "'.");
-        });
-
-        // called when all chunks of data have been received
-        request.addListener("end", function() {
-
-            // we pass handle object, pathname that was requested
-            // response object, so that routes can use it to response on their own
-            // and postData to operate on it
-            route(handle, pathname, response, postData);
-        });
+        route(handle, pathname, response, request);
     }
-
 
     http.createServer(onRequest).listen(8888); // on request function receives request, response from createServer
     console.log("Server has started");

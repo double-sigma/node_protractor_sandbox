@@ -1,8 +1,8 @@
-function route (handle, pathname, response, postData) {
+function route (handle, pathname, response, request) {
     console.log("About to route a request for " + pathname);
 
     if (typeof handle[pathname] === 'function') {
-        return handle[pathname](response, postData); //  “Please, handle this pathname”
+        return handle[pathname](response, request); //  “Please, handle this pathname”
         // Because we can access our request handler functions from our object just as we would access an element of
         // an associative array, we have this nice fluent handle[pathname](); instead of endless if/else if
     } else {

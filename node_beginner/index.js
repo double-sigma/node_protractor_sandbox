@@ -6,6 +6,7 @@ var handle = {}; // a JS object, where an object.functionCall is mapped to a str
 handle["/"] = requestHandlers.start;
 handle["/start"] = requestHandlers.start;
 handle["/upload"] = requestHandlers.upload;
+handle["/show"] = requestHandlers.show;
 
 
 server.start(router.route, handle); // we are passing a function and object (as there are no associative arrays)
