@@ -1,13 +1,18 @@
+var exec = require("child_process").exec;
+
 function start() {
     console.log("Request handler 'start' was called");
 
-    function sleep(milliSeconds) {
-        var startTime = new Date().getTime();
-        while (new Date().getTime() < startTime + milliSeconds);
-    }
-
-    sleep(10000); // BLOCKING operation, holds whole node.js single thread
-    return "Hello Start";
+    var content = "empty";
+    exec("find /Users/ssergejev", function (error, stdout, stderr) {
+        content = stdout;
+    });
+    // The problem is that exec(), in order to work non-blocking, makes use of a callback function
+    // And herein lies the root of our problem: our own code is executed synchronous,
+    // which means that immediately after calling exec(), Node.js continues to execute return content;
+    // At this point, content is still “empty”, due to the fact that the callback function passed to exec()
+    // has not yet been called - because exec() operates asynchronous
+    return content;
 }
 
 function upload() {
