@@ -6,6 +6,7 @@ Sandbox to play with The Node Beginner Book by Manuel Kiessling
 * The user should be able to use our application with a web browser
 * The user should see a welcome page when requesting http://localhost:8888/start
 * http://localhost:8888/start should display a file upload form
+* For the sake of simplicity we will assume that only image files are going to be uploaded and displayed
 * By choosing an image file to upload and submitting the form, this image should then be
 uploaded to http://localhost:8888/upload, where it is displayed once the upload is finished
 
