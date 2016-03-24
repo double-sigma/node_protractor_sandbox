@@ -24,6 +24,9 @@ function start(route, handle) { // DI. Expecting route function and object of ur
     function onRequest(request, response) { // request and response are returned on each received request
         var pathname = url.parse(request.url).pathname;
         console.log("Request for " + pathname + " received");
+
+        // Looks like we will have to pass the request object all the way from the server to the router
+        // to the request handler. There may be more elegant solutions, but this approach should do the job for now
         route(handle, pathname, response, request);
     }
 
