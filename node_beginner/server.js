@@ -16,13 +16,23 @@ var url = require("url");
 // }; // NB! must terminate assignment operation, yay @ IDEA
 // http.createServer(server).listen(8888);
 
-// or we can simply name this function and pass its name
-function onRequest(request, response) { // request and response are returned on each received request
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
-    response.end();
-}
-function start() {
+
+function start(route) { // DI for routing
+
+    // or we can simply name this function and pass its name
+    // can't move this into own first level scope, because otherwise we can't pass route
+    function onRequest(request, response) { // request and response are returned on each received request
+        var pathname = url.parse(request.url).pathname;
+        console.log("Request for " + pathname + " received");
+
+        route(pathname);
+
+        response.writeHead(200, {"Content-Type": "text/plain"});
+        response.write("Hello World");
+        response.end();
+    }
+
+
     http.createServer(onRequest).listen(8888); // on request function receives request, response from createServer
     console.log("Server has started");
 }
