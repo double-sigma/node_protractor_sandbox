@@ -25,10 +25,9 @@ function start(route, handle) { // DI. Expecting route function and object of ur
         var pathname = url.parse(request.url).pathname;
         console.log("Request for " + pathname + " received");
 
-        response.writeHead(200, {"Content-Type": "text/plain"});
-        var content = route(handle, pathname);
-        response.write(content);
-        response.end();
+        route(handle, pathname, response);
+        // we pass handle object, pathname that was requestes and response object
+        // so that routes can use it response on their own
     }
 
 

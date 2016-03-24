@@ -1,23 +1,25 @@
 var exec = require("child_process").exec;
 
-function start() {
+function start(response) {
     console.log("Request handler 'start' was called");
 
     var content = "empty";
-    exec("find /Users/ssergejev", function (error, stdout, stderr) {
-        content = stdout;
-    });
-    // The problem is that exec(), in order to work non-blocking, makes use of a callback function
-    // And herein lies the root of our problem: our own code is executed synchronous,
-    // which means that immediately after calling exec(), Node.js continues to execute return content;
-    // At this point, content is still “empty”, due to the fact that the callback function passed to exec()
-    // has not yet been called - because exec() operates asynchronous
-    return content;
+
+    function onResponse(error, stdout, stderr){
+        response.writeHead(200, {"Content-Type": "text/plain"});
+        response.write(stdout);
+        response.end();
+    }
+    
+    exec("find /Users/ssergejev", onResponse);
+
 }
 
 function upload() {
     console.log("Request handler 'upload' was called");
-    return "Hello Upload";
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("Hello Upload");
+    response.end();
 }
 
 exports.start = start;
