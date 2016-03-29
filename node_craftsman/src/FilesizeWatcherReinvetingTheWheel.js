@@ -17,7 +17,7 @@ var FilesizeWatcher = function (path) {
         process.nextTick(function () {
             self.callbacks['error']('Path does not start with a slash');
         });
-        process.exit();
+        return;
     }
 
     fs.stat(path, function (err, stats) {
