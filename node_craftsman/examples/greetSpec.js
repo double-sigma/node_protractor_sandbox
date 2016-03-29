@@ -1,5 +1,5 @@
 'use strict';
-var greet = require('../src/greet');
+var greet = require('./greet');
 
 describe('greet', function() { // suite
 

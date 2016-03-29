@@ -3,7 +3,7 @@
 var fs = require('fs');
 
 
-var stream = fs.createReadStream('/Users/ssergejev/Downloads/drawingforitarchitects-sample.pdf');
+var stream = fs.createReadStream('/Users/ssergejev/Desktop/dump.txt');
 // stream is an Event Emitter
 // where's node api to see what kind of event can be emitted by given function?
 
@@ -28,8 +28,9 @@ var onDataEventListener = function(data) {
 stream.on('data', onDataEventListener);
 
 // remove listener
-stream.removeListener('data', onDataEventListener);
+// stream.removeListener('data', onDataEventListener);
 
+// having this here dropt on 'data' for some reason. TODO
 // stream.removeAllListeners('data');
 
 // listens to end event
