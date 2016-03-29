@@ -5,6 +5,7 @@ var url = require('url');
 var querystring = require('querystring');
 
 http.createServer(function (request, response) {
+
     var pathname = url.parse(request.url).pathname;
     var query = url.parse(request.url).query;
     var id = querystring.parse(query)['id'];
@@ -13,6 +14,8 @@ http.createServer(function (request, response) {
         'id': id,
         'value': Math.floor(Math.random() * 100)
     };
+
+    console.log('received request ' + pathname + ' at ' + new Date());
 
     response.writeHead(200, {"Content-Type": "application/json"});
     response.end(JSON.stringify(result));
