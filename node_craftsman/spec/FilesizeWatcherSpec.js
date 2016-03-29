@@ -1,5 +1,5 @@
 'use strict';
-var FilesizeWatcher = require('../src/FilesizeWatcherReinvetingTheWheel');
+var FilesizeWatcher = require('../src/FilesizeWatcher');
 var exec = require('child_process').exec;
 
 
