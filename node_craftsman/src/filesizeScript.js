@@ -2,7 +2,7 @@
 
 var FilesizeWatcher = require('./FilesizeWatcher');
 
-var watcher = new FilesizeWatcher('/path/to/file');
+var watcher = new FilesizeWatcher('/Users/ssergejev/Desktop/dump.txt');
 
 watcher.on('error', function (err) {
     console.log('Error watching file:', err);
@@ -16,4 +16,4 @@ watcher.on('shrank', function (loss) {
     console.log('File shrank by', loss, 'bytes');
 });
 
-watcher.stop();
+//watcher.stop();
