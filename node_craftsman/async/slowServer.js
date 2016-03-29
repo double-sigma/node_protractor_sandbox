@@ -19,6 +19,8 @@ http.createServer(function (request, response) {
         'value': Math.floor(Math.random() * 100)
     };
 
+    console.log('received request at ' + new Date());
+
     setTimeout(function () {
         response.writeHead(200, {"Content-Type": "application/json"});
         response.end(JSON.stringify(result));
