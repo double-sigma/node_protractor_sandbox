@@ -8,11 +8,16 @@ var FilesizeWatcher = function (path) {
 
     self.callbacks = {};
 
+    // without the nextTick callback happens in same event-loop as the object construction
+    // object constructor performs a path check and triggeres an error callback
+    // but this method will always be used as initialisation first and callback attachment later
+    // for this we need to move triggering of error callback to next event-loop
+    // we put error callback function as a callback for nextTick. Once tick happens - triggering is called
     if (/^\//.test(path) === false) {
         process.nextTick(function () {
             self.callbacks['error']('Path does not start with a slash');
         });
-        return;
+        process.exit();
     }
 
     fs.stat(path, function (err, stats) {
@@ -21,6 +26,11 @@ var FilesizeWatcher = function (path) {
 
     self.interval = setInterval(function () {
         fs.stat(path, function (err, stats) {
+
+            if ( stats === undefined ) {
+                self.callbacks['error']('File size undefined. File does not exist?');
+                process.exit();
+            }
 
             if (stats.size > self.lastfilesize) {
                 self.callbacks['grew'](stats.size - self.lastfilesize);
