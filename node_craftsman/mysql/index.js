@@ -6,12 +6,16 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: ''
+    password: '',
+    database: 'node'
 });
 
 // TODO make it synchronous and check with eg http request and sleep(10)
 connection.query(
-    'SELECT "foo" AS first_field, "bar" AS second_field',
+    // large resultsets is another source of potentially blocking behaviour
+    // Using the callback pattern ensures that our Node.js application won’t block while DB retrieves 10000000 rows
+    // but when node starts operating on them, eg logging - it will block
+    'SELECT id, content FROM test;',
     // This function gets called when Node.js receives the answer to our query from the server - a callback.
     function (err, results, fields) {
         // results is simply an array of objects, with each object representing one row of the result set
@@ -22,7 +26,6 @@ connection.query(
         // [ { objects_attribute: 'attribute value' } ]
         if (!err) {
             console.log(results);
-            console.log(fields);
         } else {
             console.log(err);
         }
