@@ -5,6 +5,7 @@ var async = require('async');
 
 var url = 'http://localhost:8080/';
 
+// http://www.sebastianseilund.com/nodejs-async-in-practice
 // same result as boomerang, but much more readable code
 // series runs request one after another in guaranteed order
 // In case that one of the series steps passes a non-null value to its callback as the first parameter,

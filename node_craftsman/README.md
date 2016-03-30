@@ -17,3 +17,4 @@ Sandbox to play with The Node Craftsman Book by Manuel Kiessling
 # To read
 * https://npmjs.org/doc/json.html#dependencies
 * http://maxogden.com/node-streams
+* http://www.sebastianseilund.com/nodejs-async-in-practice
