@@ -21,7 +21,17 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
             collection.find(
                 {
                     'n': /^#1/
-                }).toArray(function (err, documents) {
+                }
+                ,
+                {
+
+                    // skip first two, show next and sort by v
+                    // seems sort is done first, then two are skipped then five from the remainng top are shown
+                    'limit': 5,
+                    'skip': 2,
+                    'sort': 'v'
+                }
+            ).toArray(function (err, documents) {
                 console.dir(documents);
                 callback();
             });
@@ -63,11 +73,8 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
                 });
         };
 
-        // insert 20 records
-        // update those whose v > 5
-        // list documents
-        // delete all documents
-        doInsert(0);
+
+        listDocuments(function() {connection.close()});
 
 
     });
