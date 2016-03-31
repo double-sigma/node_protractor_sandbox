@@ -27,9 +27,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
 
                     // skip first two, show next and sort by v
                     // seems sort is done first, then two are skipped then five from the remainng top are shown
-                    'limit': 5,
-                    'skip': 2,
-                    'sort': [ ['v', 'asc'], ['n', 'desc'] ]
+                    'sort': [['v', 'asc'], ['n', 'desc']]
                 }
             ).toArray(function (err, documents) {
                 console.dir(documents);
@@ -73,8 +71,37 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
                 });
         };
 
+        var doUpdate = function () {
+            // increase v by 1 (There is no $dec operation, but we can increase by -1)
+            // there's also $mul for multiply
+            // $rename Renames a field
+            // $unset Removes the specified field from a document
+            // $min Only updates the field if the specified value is less than the existing field value
+            // $max Only updates the field if the specified value is greater than the existing field value
+            // $currentDate Sets the value of a field to current date, either as a Date or a Timestamp
+            // more at http://docs.mongodb.org/manual/reference/operator/update- field/
+            collection.update(
+                {'n': /^#1/}, // those starting with #1
+                {'$inc': {'v': +1}},
+                {'multi': true},
+                function (err, count) {
+                    console.log('\n\n');
+                });
+        };
 
-        listDocuments(function() {connection.close()});
+
+        // list documents as is
+        listDocuments(function () {
+            console.log('\n\n');
+        });
+
+        // increase v by 1 for those starting with #1
+        doUpdate();
+
+        // list documents again and close connection
+        listDocuments(function () {
+            connection.close();
+        });
 
 
     });
