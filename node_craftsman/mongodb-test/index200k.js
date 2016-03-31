@@ -7,16 +7,25 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
 
         var collection = connection.collection('customers');
 
-        collection.find(
-            {'v': {'$gt': 5}}
-            ,
-            {
-                'skip:': 100000,
-                'limit': 10,
-                'sort': 'v'
-            }
-        ).toArray(function (err, documents) {
-            console.dir(documents);
+        var listDocuments = function (callback) {
+            collection.find(
+                {'v': {'$gt': 5}}
+                ,
+                {
+                    'skip:': 100000,
+                    'limit': 15000,
+                    'sort': 'v'
+                }
+            ).each(function (err, document) {
+                if (document === null) {
+                    callback();
+                } else {
+                    console.dir(document);
+                }
+            });
+        };
+
+        listDocuments(function () {
             connection.close();
         });
     });
