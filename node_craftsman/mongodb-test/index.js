@@ -9,7 +9,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
 
         var listDocuments = function (callback) {
             // basically this is an AND query: "WHERE v < 8 AND valuable = true"
-            collection.find({'v': {'&lt': 8}, 'valuable': true}).toArray(function (err, documents) {
+            collection.find({'v': {'$lt': 8}, 'valuable': true}).toArray(function (err, documents) {
                 console.dir(documents);
                 callback();
             });
