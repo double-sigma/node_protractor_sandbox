@@ -8,20 +8,20 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
         var collection = connection.collection('customers');
 
         var listDocuments = function (callback) {
-            collection.find(
-                {'v': {'$gt': 5}}
-                ,
+            // The stream object returned by collection.find().stream() implements the stream.Readable
+            // interface. See the more at http://nodejs.org/api/stream.html#stream_class_stream_readable
+            var stream = collection.find({'v': {'$gt': 5}},
                 {
                     'skip:': 100000,
                     'limit': 15000,
                     'sort': 'v'
                 }
-            ).each(function (err, document) {
-                if (document === null) {
-                    callback();
-                } else {
-                    console.dir(document);
-                }
+            ).stream();
+            stream.on('data', function (document) {
+                console.dir(document);
+            });
+            stream.on('close', function () {
+                callback();
             });
         };
 
