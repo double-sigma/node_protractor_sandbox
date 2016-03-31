@@ -8,13 +8,21 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
         var collection = connection.collection('customers2');
 
         var listDocuments = function (callback) {
-            // basically this is an AND query: "WHERE v < 8 AND valuable = true"
+            // comma separates AND parameters
+            // $or or
             // $lt less than
             // $gt greater than
             // $lte less than equal
             // $gte greater than equal
             // $ne not equal
-            collection.find({'v': {'$lt': 8}, 'valuable': true}).toArray(function (err, documents) {
+            // WHERE v > 3 AND (n == #5 OR n == #10)
+            collection.find(
+                {
+                    'v': {'$gt': 3},
+                    '$or': [
+                        {'n': '#5'}, {'n': '#10'}
+                    ]
+                }).toArray(function (err, documents) {
                 console.dir(documents);
                 callback();
             });
