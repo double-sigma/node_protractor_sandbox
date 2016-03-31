@@ -15,13 +15,12 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
             // $lte less than equal
             // $gte greater than equal
             // $ne not equal
-            // WHERE v > 3 AND (n == #5 OR n == #10)
+            // n is a string, so > and < do not apply to it
+            // we can use regexp instead
+            // WHERE n like '#1%'
             collection.find(
                 {
-                    'v': {'$gt': 3},
-                    '$or': [
-                        {'n': '#5'}, {'n': '#10'}
-                    ]
+                    'n': /^#1/
                 }).toArray(function (err, documents) {
                 console.dir(documents);
                 callback();
