@@ -42,9 +42,9 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
                     listDocuments(function () {
                         // remove doesn’t need a multi parameter in order to work on all matched documents
                         // it does so by default
-                        //collection.remove({}, function () {
+                        collection.remove({}, function () {
                             connection.close();
-                        //});
+                        });
                     });
 
                 });
