@@ -30,6 +30,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
                     'sort': [['v', 'asc'], ['n', 'desc']]
                 }
             ).toArray(function (err, documents) {
+                // We now have one large array of documents
                 console.dir(documents);
                 callback();
             });
