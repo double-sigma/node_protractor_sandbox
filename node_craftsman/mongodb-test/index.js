@@ -29,7 +29,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/accounting',
                     // seems sort is done first, then two are skipped then five from the remainng top are shown
                     'limit': 5,
                     'skip': 2,
-                    'sort': 'v'
+                    'sort': [ ['v', 'asc'], ['n', 'desc'] ]
                 }
             ).toArray(function (err, documents) {
                 console.dir(documents);
