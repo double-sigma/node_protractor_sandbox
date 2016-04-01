@@ -2,10 +2,37 @@
 
 var request = require('request');
 var dbSession = require('../../src/backend/dbSession.js');
+var Server = require('../../src/backend/server.js').Server;
 var resetDatabase = require('../resetDb.js');
 var async = require('async');
 
 describe('The API', function () {
+
+    var server;
+    var port = '8586';
+
+    beforeEach(function (done) {
+        server = Server(port);
+
+        server.listen(
+            function (err) {
+                resetDatabase(dbSession,
+                    function () {
+                        done(err);
+                    });
+            });
+    });
+
+    afterEach(function (done) {
+        server.close(
+            function () {
+                resetDatabase(dbSession,
+                    function () {
+                        done();
+                    });
+            });
+    });
+
 
     it('should response to a GET request at /api/keywords/', function (done) {
 
@@ -21,10 +48,6 @@ describe('The API', function () {
 
         async.series(
             [
-                function (callback) {
-                    resetDatabase(dbSession, callback);
-                },
-
                 function (callback) {
                     dbSession.insert(
                         'keyword',
@@ -54,12 +77,14 @@ describe('The API', function () {
             ],
 
             function (err, results) {
+                if (err) throw (err);
                 request.get(
                     {
-                        'url': 'http://localhost:8585/api/keywords/',
+                        'url': 'http://localhost:' + port + '/api/keywords/',
                         'json': true
                     },
                     function (err, res, body) {
+                        if (err) throw (err);
                         expect(res.statusCode).toBe(200);
                         expect(body).toEqual(expected);
                         done();
