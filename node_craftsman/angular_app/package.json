@@ -1,0 +1,26 @@
+{
+  "name": "angular_app",
+  "version": "1.0.0",
+  "description": "A tool to manage keywords",
+  "main": "src/backend/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+
+  "dependencies": {
+    "async": "^1.5.2",
+    "bower": "^1.7.7",
+    "db-migrate": "^0.9.23",
+    "mysql": "^2.10.2",
+    "node-dbi": "^0.7.1",
+    "percolator": "^1.5.0"
+  },
+
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "request": "^2.69.0",
+    "sqlite3": "^3.1.3"
+  }
+}
