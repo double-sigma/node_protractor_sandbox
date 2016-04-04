@@ -3,23 +3,21 @@
 Sandbox to play with The Node Craftsman Book by Manuel Kiessling
 
 # The project
+* angular
+  * example app of jasmine, mysql, sqlite3 (for dev & test), angular FE on top of node BE
+* async
+  * different async examples
 * examples
   * streams and OOP examples
   * jasmine example
 * filesize watcher
   * example of creating event emitter
-  * jasmine tests
-* async
-  * different async exmaples
+  * first jasmine tests
+  * to run jasmine tests execute `./node_modules/jasmine-node/bin/jasmine-node spec/greetSpec.js`
 * mongodb-test
   * example of mongo usage from node
 * mysql
   * example of mysql usage from node
-* angular
-  * example app of jasmine, mysql, sqlite3 (for dev & test), angular FE on top of node BE
-
-# Running
-* to run Jasmine tests execute `./node_modules/jasmine-node/bin/jasmine-node spec/greetSpec.js`
 
 
 # To read
