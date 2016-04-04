@@ -36,3 +36,7 @@ node_modules
 ../.idea/*
 .idea
 .idea/vcs.xml
+
+# Bower
+node_craftsman/angular_app/src/frontend/bower_components/
+
