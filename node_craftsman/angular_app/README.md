@@ -19,7 +19,7 @@ Example app of angular FE on top of node BE with jasmine, mysql, sqlite3 (for de
  * test db is erased and created by tests
  * production is... production. If it works, don't touch it
 * to create new db migration run `./node_modules/.bin/db-migrate create populateCategoryTable --env test`
-
+* run `./node_modules/.bin/webdriver-manager update` to install web driver stuff
 
 # To read
 * https://npmjs.org/doc/json.html#dependencies
