@@ -16,21 +16,25 @@ function writeScreenShot(data, filename) {
 module.exports = function () {
     this.Given(/^keyword wrangler is open$/, function (callback) {
         // assert(true); // OK
-        //expect(true).to.toEqual(true); // NOK -> jasmine syntax results in TypeError
-        expect(true).to.equal(true); // OK -> chai syntax
-        //browser.navigate('http://localhost:8586');
+        // expect(true).toEqual(true); // NOK -> jasmine syntax results in TypeError
+        // expect(true).to.equal(true); // OK -> chai syntax
+        browser.navigate('http://localhost:8586');
 
         callback();
     });
 
-    this.Then(/^page title should be Keyword Wrangler$/, function (callback) {
+    this.Then(/^page title should be Keyword Wrangler$/, function (done) {
 
-        // browser.takeScreenshot().then(function (png) {
-        //     writeScreenShot(png, 'exception.png');
-        // });
-        //
-        // expect(browser.getTitle()).to.eventually.equal('Keyword Wrangler').and.notify(callback);
+        var title = browser.getTitle();
 
-        callback();
+        console.log(title);
+        expect(title).toEqual('NaN NaNNaNKeyword Wrangler');
+        console.log(title);
+
+        browser.takeScreenshot().then(function (png) {
+            writeScreenShot(png, 'exception.png');
+        });
+
+        done();
     });
 };

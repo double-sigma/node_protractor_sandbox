@@ -7,14 +7,7 @@ exports.config = {
     ],
 
     exclude: [],
-
-    framework: 'custom',
-    frameworkPath: 'node_modules/protractor-cucumber-framework',
-
-    cucumberOpts: {
-        require: 'spec/e2e/features/step_definitions/**/*js',
-        format: 'summary'
-    },
+    
 
     allScriptsTimeout: 110000,
 
@@ -45,27 +38,8 @@ exports.config = {
     onPrepare: function () {
         browser.ignoreSynchronization = true;
 
-        var chai = require('chai');
-        var chaiAsPromised = require('chai-as-promised');
-        chai.use(chaiAsPromised);
-
-        global.expect = chai.expect;
-        //global._ = require('lodash');
-
-        function moduleAvailable(name) {
-            try {
-                require.resolve(name);
-                return true;
-            } catch(e){}
-            return false;
-        }
-
-        if (moduleAvailable('mongodb')) {
-            console.log()
-        }
         
-        
-    },
+    }
 
 
 };
