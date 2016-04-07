@@ -51,6 +51,20 @@ exports.config = {
 
         global.expect = chai.expect;
         //global._ = require('lodash');
+
+        function moduleAvailable(name) {
+            try {
+                require.resolve(name);
+                return true;
+            } catch(e){}
+            return false;
+        }
+
+        if (moduleAvailable('mongodb')) {
+            console.log()
+        }
+        
+        
     },
 
 
