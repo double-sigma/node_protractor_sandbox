@@ -8,7 +8,7 @@ var server;
 var port = '8586';
 
 var myHooks = function () {
-    this.Before(function (scenario, callback) {
+    this.Before(function (scenario, done) {
         // Just like inside step definitions, "this" is set to a World instance.
         // It's actually the same instance the current scenario step definitions
         // will receive.
@@ -20,7 +20,18 @@ var myHooks = function () {
         server = Server(port);
         server.listen(
             function () {
-                resetDatabase(dbSession, callback);
+                resetDatabase(dbSession, done);
+            });
+    });
+
+
+    this.After(function (scenario, done) {
+        server.close(
+            function () {
+                resetDatabase(dbSession,
+                    function () {
+                        done();
+                    });
             });
     });
 

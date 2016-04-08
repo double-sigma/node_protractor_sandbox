@@ -5,7 +5,7 @@
   "main": "src/backend/index.js",
   "scripts": {
     "test": "KW_ENV=test ./node_modules/.bin/jasmine-node --verbose --captureExceptions ./spec/",
-    "e2e_cucumber": "./node_modules/.bin/protractor protractor.cuke.js",
+    "e2e_cucumber": "./node_modules/.bin/protractor protractor-cuke.js",
     "e2e_plain_protractor": "./node_modules/.bin/protractor spec/e2e/config.js",
     "setupDevDb": "./node_modules/.bin/db-migrate up --env dev",
     "setupTestDb": "./node_modules/.bin/db-migrate up --env test",

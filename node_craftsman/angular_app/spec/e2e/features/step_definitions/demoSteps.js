@@ -1,40 +1,28 @@
-/*globals browser, protractor, By */
-
 'use strict';
 
-// screenshot
-var fs = require('fs');
-
-// abstract writing screen shot to a file
-function writeScreenShot(data, filename) {
-    var stream = fs.createWriteStream(filename);
-    stream.write(new Buffer(data, 'base64'));
-    stream.end();
-}
-// screenshot
-
 module.exports = function () {
-    this.Given(/^keyword wrangler is open$/, function (callback) {
+    this.Given(/^keyword wrangler is open$/, function (done) {
         // assert(true); // OK
         // expect(true).toEqual(true); // NOK -> jasmine syntax results in TypeError
         // expect(true).to.equal(true); // OK -> chai syntax
-        browser.navigate('http://localhost:8586');
+        browser.get('http://localhost:8586');
+        done();
+    });
 
-        callback();
+    this.Then(/^page title should be NaN NaNNaNKeyword Wrangler$/, function (done) {
+
+        var title = browser.getTitle();
+
+        // if callback is not notified here, then step and scenario will NOT fail
+        expect(title).to.eventually.equal('NaN NaNNaNKeyword Wrangler').notify(done);
+
     });
 
     this.Then(/^page title should be Keyword Wrangler$/, function (done) {
 
         var title = browser.getTitle();
 
-        console.log(title);
-        expect(title).toEqual('NaN NaNNaNKeyword Wrangler');
-        console.log(title);
+        expect(title).to.eventually.equal('Keyword Wrangler').notify(done);
 
-        browser.takeScreenshot().then(function (png) {
-            writeScreenShot(png, 'exception.png');
-        });
-
-        done();
     });
 };

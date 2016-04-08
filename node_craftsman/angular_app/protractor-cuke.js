@@ -7,27 +7,24 @@ exports.config = {
     ],
 
     exclude: [],
-    
 
-    allScriptsTimeout: 110000,
+    framework: 'custom',
+    frameworkPath: 'node_modules/protractor-cucumber-framework',
 
-    jasmineNodeOpts: {
-        showTiming: true,
-        showColors: true,
-        isVerbose: false,
-        includeStackTrace: false,
-        defaultTimeoutInterval: 400000
+    cucumberOpts: {
+        require: 'spec/e2e/features/step_definitions/**/*js',
+        format: 'summary'
     },
 
-    baseUrl: 'https://www.google.co.uk',
+    allScriptsTimeout: 5000,
+
+
+    baseUrl: 'http://localhost:8586',
 
     directConnect: true,
 
     capabilities: {
-        'browserName': 'chrome',
-        'chromeOptions': {
-            'args': ['show-fps-counter=true']
-        }
+        'browserName': 'chrome'
     },
 
     // CucumberJS and Jasmine are mutually exclusive; you won't be able to use Jasmine's expects in Cucumber steps.
@@ -36,16 +33,15 @@ exports.config = {
     // around promises. Protractor overrides the expect() function in Jasmine to do this for you behind the scenes)
     // http://stackoverflow.com/questions/30740824/how-to-use-jasmine-and-cucumberjs-with-protractor
     onPrepare: function () {
-        browser.ignoreSynchronization = true;
+        //browser.ignoreSynchronization = true;
 
-        
+        var chai = require('chai');
+        var chaiAsPromised = require('chai-as-promised');
+        chai.use(chaiAsPromised);
+        global.expect = chai.expect;
+        global.should = chai.should;
+
     }
 
 
 };
-
-
-
-
-
-
